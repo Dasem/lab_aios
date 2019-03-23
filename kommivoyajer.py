@@ -90,7 +90,7 @@ def find_min(matrix):
         return False
 
 
-def kar(matrix):
+def karaksal(matrix):
     while find_min(matrix):
         print('********')
         printishe(min_edge)
