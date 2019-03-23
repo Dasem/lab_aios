@@ -6,6 +6,7 @@ matrixA = [
     [0, 0, 1, 0]
 ]
 
+
 # =================================================
 # acycle functions
 
@@ -35,9 +36,9 @@ def is_cycle(matrix):
     acycle(matrix)
     for i in range(len(matrix)):
         for j in range(len(matrix)):
-            if matrix[i][i] != -1 and matrix[i][i] != 0:
-                return True
-    return False
+            if matrix[i][j] != -1 and matrix[i][j] != 0:
+                return False
+    return True
 
 
 # end of acycle functions
@@ -76,7 +77,7 @@ def find_min(matrix):
     coord_j = -1
     for i in range(len(matrix)):
         for j in range(len(matrix)):
-            if matrix[i][j] != -1 and matrix[i][j] != 0 and matrix[i][j] < min:
+            if matrix[i][j] != -1 and matrix[i][j] != 0 and matrix[i][j] <= min:
                 min = matrix[i][j]
                 coord_i = i
                 coord_j = j
@@ -97,6 +98,7 @@ def karaksal(matrix):
         print('********')
         if is_cycle(true_copy(ostovnoe_derevo)):
             print('\n\n\n\nKARAMBA!')
+
             # ОТКАТ ПОСЛЕДНЕГО ДЕЙСТВИЯ
             return 0
 
