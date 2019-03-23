@@ -22,3 +22,22 @@ def find_start_node(matrix):
             return node
     return -1
 
+
+# ================================================
+
+# -1
+def delete_check(row):
+    current_nodes = 0
+    for i in range(len(row)):
+        if row[i] != -1 and row[i] != 0:
+            current_nodes = current_nodes + 1
+    if current_nodes == 2:
+        return -1
+    return 1
+
+
+def kar(matrix):
+    for row_num in range(len(matrix)):
+        if delete_check(matrix[row_num]) == -1:
+           for i in range(len(matrix)):
+               matrix[row_num][i] = -1
