@@ -6,7 +6,6 @@ matrixA = [
     [0, 0, 1, 0]
 ]
 
-
 # =================================================
 # acycle functions
 
@@ -62,16 +61,16 @@ def find_max(matrix):
 
 
 copy = true_copy(matrixA)
-min_edge = true_copy(matrixA)
-for i in range(len(min_edge)):
-    for j in range(len(min_edge)):
-        min_edge[i][j] = 0
+ostovnoe_derevo = true_copy(matrixA)
+for i in range(len(ostovnoe_derevo)):
+    for j in range(len(ostovnoe_derevo)):
+        ostovnoe_derevo[i][j] = 0
 
 max_value = find_max(copy)
 
 
 def find_min(matrix):
-    global min_edge
+    global ostovnoe_derevo
     min = max_value
     coord_i = -1
     coord_j = -1
@@ -82,8 +81,10 @@ def find_min(matrix):
                 coord_i = i
                 coord_j = j
     if coord_i != -1:
-        copy[coord_i][coord_j] = -1
-        min_edge[coord_i][coord_j] = min
+        copy[coord_i][coord_j] = copy[coord_j][coord_i] = -1
+        ostovnoe_derevo[coord_i][coord_j] = ostovnoe_derevo[coord_j][coord_i] = min
+        print('Изменение остовного дерева')
+        printishe(ostovnoe_derevo)
         return True
     else:
         return False
@@ -92,9 +93,9 @@ def find_min(matrix):
 def karaksal(matrix):
     while find_min(matrix):
         print('********')
-        printishe(min_edge)
+        printishe(ostovnoe_derevo)
         print('********')
-        if is_cycle(true_copy(min_edge)):
+        if is_cycle(true_copy(ostovnoe_derevo)):
             print('\n\n\n\nKARAMBA!')
             # ОТКАТ ПОСЛЕДНЕГО ДЕЙСТВИЯ
             return 0
@@ -122,7 +123,5 @@ def printishe(matrix):
 
 karaksal(copy)
 
-printishe(matrixA)
-
 print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
-printishe(min_edge)
+printishe(ostovnoe_derevo)
