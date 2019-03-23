@@ -7,6 +7,7 @@ matrix = [[0, 4, 4, 2, 2],
 result = -1
 
 
+
 # =================================================
 # acycle functions
 
@@ -37,13 +38,20 @@ def is_cycle(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix)):
             if matrix[i][i] != -1 and matrix[i][i] != 0:
-                return False
-    return True
+                return True
+    return False
 
 
 # end of acycle functions
 # ========================================
 # kara...   functions
+
+def true_copy(a):
+    result = []
+    for row in a:
+        result.append(row.copy())
+    return result
+
 
 def find_max(matrix):
     max = matrix[0][0]
@@ -54,8 +62,13 @@ def find_max(matrix):
     return max
 
 
-min_edge = matrixA.copy()
-max_value = find_max(matrixA)
+copy = true_copy(matrixA)
+min_edge = true_copy(matrixA)
+for i in range(len(min_edge)):
+    for j in range(len(min_edge)):
+        min_edge[i][j] = 0
+
+max_value = find_max(copy)
 
 
 def find_min(matrix):
@@ -70,7 +83,8 @@ def find_min(matrix):
                 coord_i = i
                 coord_j = j
     if coord_i != -1:
-        min_edge[coord_i][coord_j] = -1
+        copy[coord_i][coord_j] = -1
+        min_edge[coord_i][coord_j] = min
         return True
     else:
         return False
@@ -78,8 +92,13 @@ def find_min(matrix):
 
 def kar(matrix):
     while find_min(matrix):
-        if is_cycle(matrix):
-            print('KARAMBA!')
+        print('********')
+        printishe(min_edge)
+        print('********')
+        if is_cycle(true_copy(min_edge)):
+            print('\n\n\n\nKARAMBA!')
+            # ОТКАТ ПОСЛЕДНЕГО ДЕЙСТВИЯ
+            return 0
 
 
 def printishe(matrix):
@@ -97,19 +116,14 @@ def printishe(matrix):
             print(']')
 
 
-
 # end of kar functions
 # ===========================
 #    main
 
 
-#komm(0, [0], 0)
-print(result)
-
-kar(min_edge)
+kar(copy)
 
 printishe(matrixA)
 
 print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
 printishe(min_edge)
-
