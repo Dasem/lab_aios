@@ -18,7 +18,7 @@ def komm(sum_nodes, pasted, current_node):
         if next_node not in pasted:
             new_pasted = pasted.copy()
             new_pasted.append(next_node)
-            print(new_pasted)
+            # print(new_pasted)
             komm(sum_nodes + matrix[current_node][next_node],
                  new_pasted,
                  next_node)
