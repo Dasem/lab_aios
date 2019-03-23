@@ -7,23 +7,6 @@ matrix = [[0, 4, 4, 2, 2],
 result = -1
 
 
-def komm(sum_nodes, pasted, current_node):
-    global result
-    if len(pasted) == len(matrix):
-        # print(sum_nodes)
-        if result == -1 or result > sum_nodes:
-            result = sum_nodes
-        return
-    for next_node in range(len(matrix)):
-        if next_node not in pasted:
-            new_pasted = pasted.copy()
-            new_pasted.append(next_node)
-            # print(new_pasted)
-            komm(sum_nodes + matrix[current_node][next_node],
-                 new_pasted,
-                 next_node)
-
-
 # =================================================
 # acycle functions
 
@@ -38,15 +21,24 @@ def delete_check(row):
 
 
 def acycle(matrix):
-    was_deleted = 1
-    while was_deleted == 1:
-        was_deleted = 0
+    was_deleted = True
+    while was_deleted:
+        was_deleted = False
         for row_num in range(len(matrix)):
             if delete_check(matrix[row_num]) == -1:
                 for i in range(len(matrix)):
                     matrix[row_num][i] = -1
                     matrix[i][row_num] = -1
-                was_deleted = 1
+                was_deleted = True
+
+
+def is_cycle(matrix):
+    acycle(matrix)
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            if matrix[i][i] != -1 and matrix[i][i] != 0:
+                return False
+    return True
 
 
 # end of acycle functions
@@ -57,13 +49,13 @@ def find_max(matrix):
     max = matrix[0][0]
     for i in range(len(matrix)):
         for j in range(len(matrix)):
-            if matrix[i][i] != -1 and matrix[i][i] != 0 and matrix[i][i] > max:
-                max = matrix[i][i]
+            if matrix[i][j] != -1 and matrix[i][j] != 0 and matrix[i][j] > max:
+                max = matrix[i][j]
     return max
 
 
-min_edge = []
-max_value = find_max(matrix)
+min_edge = matrixA.copy()
+max_value = find_max(matrixA)
 
 
 def find_min(matrix):
@@ -73,24 +65,36 @@ def find_min(matrix):
     coord_j = -1
     for i in range(len(matrix)):
         for j in range(len(matrix)):
-            if matrix[i][i] != -1 and matrix[i][i] != 0 and matrix[i][i] < min:
-                min = matrix[i][i]
+            if matrix[i][j] != -1 and matrix[i][j] != 0 and matrix[i][j] < min:
+                min = matrix[i][j]
                 coord_i = i
                 coord_j = j
-    if coord_i!=-1:
-        min_edge.append([min,coord_i,coord_j])
-        matrix[coord_i][coord_j]= -1
-        return 1
+    if coord_i != -1:
+        min_edge[coord_i][coord_j] = -1
+        return True
     else:
-        return -1
-
-def is_a_cycle(edge_list):
-
+        return False
 
 
 def kar(matrix):
-    not_cycle = 1
-    while(find_min(matrix)==1 and  )
+    while find_min(matrix):
+        if is_cycle(matrix):
+            print('KARAMBA!')
+
+
+def printishe(matrix):
+    n = len(matrix)
+    for i in range(n):
+        print('[', end='')
+        for j in range(n):
+            if j != n - 1:
+                print(str(matrix[i][j]) + ', ', end='')
+            else:
+                print(str(matrix[i][j]), end='')
+        if i != n - 1:
+            print('],')
+        else:
+            print(']')
 
 
 
@@ -98,20 +102,14 @@ def kar(matrix):
 # ===========================
 #    main
 
-komm(0, [0], 0)
+
+#komm(0, [0], 0)
 print(result)
 
-acycle(matrix)
+kar(min_edge)
 
-n = len(matrix)
-for i in range(n):
-    print('[', end='')
-    for j in range(n):
-        if j != n - 1:
-            print(str(matrix[i][j]) + ', ', end='')
-        else:
-            print(str(matrix[i][j]), end='')
-    if i != n - 1:
-        print('],')
-    else:
-        print(']')
+printishe(matrixA)
+
+print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
+printishe(min_edge)
+

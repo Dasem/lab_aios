@@ -27,7 +27,10 @@ print(n)
 
 for i in range(n):
     for j in range(n):
-        row.append(random.randint(1, 10))
+        if random.randrange(1, 3)== 1:
+            row.append(random.randrange(0, 9))
+        else:
+            row.append(0)
     a.append(row)
     row = []
 
