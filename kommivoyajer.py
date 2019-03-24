@@ -10,38 +10,46 @@ matrixA = [
 # =================================================
 # acycle functions
 
-def delete_check(row):
-    current_nodes = 0
+# Удалять её из графа в том случае, если из неё исходит меньше двух рёбер
+def is_delete_needed(row):
+    if 0 not in row:  # Если мы уже удалили вершину, то у неё стоит -1 на пути самой к себе
+        return
+
+    edges_count = 0
     for i in range(len(row)):
         if row[i] != -1 and row[i] != 0:
-            current_nodes = current_nodes + 1
-    if current_nodes == 2:
-        return -1
-    return 1
+            edges_count = edges_count + 1
+    if edges_count < 2:
+        return True
+    return False
 
 
-def acycle(matrix):
+def convert_to_cycle_or_empty_matrix(matrix):
     was_deleted = True
     while was_deleted:
         was_deleted = False
         for row_num in range(len(matrix)):
-            if delete_check(matrix[row_num]) == -1:
-                for i in range(len(matrix)):
-                    matrix[row_num][i] = -1
-                    matrix[i][row_num] = -1
+            if is_delete_needed(matrix[row_num]):
+                delete_node(matrix, row_num)
                 was_deleted = True
 
 
+def delete_node(matrix, row_num):
+    for i in range(len(matrix)):
+        matrix[row_num][i] = -1
+        matrix[i][row_num] = -1
+
+
 def is_cycle(matrix):
-    acycle(matrix)
+    convert_to_cycle_or_empty_matrix(matrix)
     for i in range(len(matrix)):
         for j in range(len(matrix)):
             if matrix[i][j] != -1 and matrix[i][j] != 0:
-                return False
-    return True
+                return True
+    return False
 
 
-# end of acycle functions
+# end of acycle functionsdelete_check
 # ========================================
 # kara...   functions
 
