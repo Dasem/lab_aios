@@ -1,8 +1,17 @@
+# matrixA = [
+#     [0, 8, 3, 0],
+#     [8, 0, 4, 0],
+#     [3, 4, 0, 1],
+#     [0, 0, 1, 0]
+# ]
+
 matrixA = [
-    [0, 8, 3, 0],
-    [8, 0, 4, 0],
-    [3, 4, 0, 1],
-    [0, 0, 1, 0]
+    [0, 3, 8, 2, 0, 7],
+    [3, 0, 0, 0, 0, 0],
+    [8, 0, 0, 1, 4, 0],
+    [2, 0, 1, 0, 2, 1],
+    [0, 0, 4, 2, 0, 5],
+    [7, 0, 0, 1, 5, 0],
 ]
 
 
@@ -103,13 +112,11 @@ def find_min(matrix):
 
 def karaksal(matrix):  # Если получился цикл, то останавливаемся, отменяем последнее добавление
     while find_min(matrix):
-        print('********')
-        printishe(ostovnoe_derevo)
-        print('********')
         if is_cycle(true_copy(ostovnoe_derevo)):
-            print('\n\n\n\nKARAMBA!')
             rollback()
-            return 0
+            print("Алярм, цикл!!1! Откачено до этого состояния:")
+            printishe(ostovnoe_derevo)
+    print("Минимальные вершины закончились")
 
 
 def rollback():
