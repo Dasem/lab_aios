@@ -142,9 +142,13 @@ def contains_all(list, collection):
     return True
 
 
+def eilerov_cycle_starter(matrix):
+    return eilerov_cycle(matrix, 0, [0], [], 0)
+
+
 def eilerov_cycle(matrix, current_node, pasted_nodes, edges_history, start_node):  # [[вес, откуда, куда],...]
     if contains_all(get_list_nodes(matrix), pasted_nodes) and current_node == start_node:
-        print(pasted_nodes)
+        return pasted_nodes
     else:
         is_there_path = False
         for node in range(len(matrix)):
@@ -155,7 +159,9 @@ def eilerov_cycle(matrix, current_node, pasted_nodes, edges_history, start_node)
                 is_there_path = True
                 edges_history.append(next_edge)
                 pasted_nodes.append(node)
-                eilerov_cycle(matrix, node, pasted_nodes, edges_history, start_node)
+                result = eilerov_cycle(matrix, node, pasted_nodes, edges_history, start_node)
+                if result is not None:
+                    return result
         if not is_there_path and not contains_all(get_list_nodes(matrix), pasted_nodes):
             rollback_eilerov_cycle(pasted_nodes, edges_history)
 
@@ -176,7 +182,8 @@ def rollback_eilerov_cycle(pasted_nodes, edges_history):
 
 karaksal(true_copy(matrixA))
 
+
 print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
 printishe(spanning_tree)
 
-eilerov_cycle(spanning_tree, 0, [], [], 0)
+print('Эйлеров цикл по остовному дереву, начиная с 0 вершины: ', eilerov_cycle_starter(spanning_tree))
