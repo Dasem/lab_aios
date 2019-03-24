@@ -78,19 +78,15 @@ def find_max(matrix):
 
 
 current_min_edge = [-1, -1]
-copy = true_copy(matrixA)
-ostovnoe_derevo = true_copy(matrixA)
-for i in range(len(ostovnoe_derevo)):
-    for j in range(len(ostovnoe_derevo)):
-        ostovnoe_derevo[i][j] = 0
+spanning_tree = [[0]*len(matrixA)]*len(matrixA)
 
-max_value = find_max(copy)
+max_value = find_max(matrixA)
 
 
 def find_min(matrix):
     global current_min_edge
-    global ostovnoe_derevo
-    min = max_value
+    global spanning_tree
+    min = max_valuemax_value
     coord_i = -1
     coord_j = -1
     for i in range(len(matrix)):
@@ -101,27 +97,27 @@ def find_min(matrix):
                 coord_j = j
                 current_min_edge = [coord_i, coord_j]
     if coord_i != -1:
-        copy[coord_i][coord_j] = copy[coord_j][coord_i] = -1
-        ostovnoe_derevo[coord_i][coord_j] = ostovnoe_derevo[coord_j][coord_i] = min
+        matrix[coord_i][coord_j] = matrix[coord_j][coord_i] = -1
+        spanning_tree[coord_i][coord_j] = spanning_tree[coord_j][coord_i] = min
         print('Изменение остовного дерева')
-        printishe(ostovnoe_derevo)
+        printishe(spanning_tree)
         return True
     else:
         return False
 
 
-def karaksal(matrix):  # Если получился цикл, то останавливаемся, отменяем последнее добавление
+def karaksal(matrix):  # Если получился цикл, отменяем последнее добавление
     while find_min(matrix):
-        if is_cycle(true_copy(ostovnoe_derevo)):
+        if is_cycle(true_copy(spanning_tree)):
             rollback()
             print("Алярм, цикл!!1! Откачено до этого состояния:")
-            printishe(ostovnoe_derevo)
+            printishe(spanning_tree)
     print("Минимальные вершины закончились")
 
 
 def rollback():
-    ostovnoe_derevo[current_min_edge[0]][current_min_edge[1]] = 0
-    ostovnoe_derevo[current_min_edge[1]][current_min_edge[0]] = 0
+    spanning_tree[current_min_edge[0]][current_min_edge[1]] = 0
+    spanning_tree[current_min_edge[1]][current_min_edge[0]] = 0
 
 
 def printishe(matrix):
@@ -144,7 +140,7 @@ def printishe(matrix):
 #    main
 
 
-karaksal(copy)
+karaksal(true_copy(matrixA))
 
 print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
-printishe(ostovnoe_derevo)
+printishe(spanning_tree)
