@@ -78,7 +78,9 @@ def find_max(matrix):
 
 
 current_min_edge = [-1, -1]
-spanning_tree = [[0]*len(matrixA)]*len(matrixA)
+spanning_tree = [0] * len(matrixA)
+for i in range(len(matrixA)):
+    spanning_tree[i] = [0] * len(matrixA)
 
 max_value = find_max(matrixA)
 
@@ -86,7 +88,7 @@ max_value = find_max(matrixA)
 def find_min(matrix):
     global current_min_edge
     global spanning_tree
-    min = max_valuemax_value
+    min = max_value
     coord_i = -1
     coord_j = -1
     for i in range(len(matrix)):
