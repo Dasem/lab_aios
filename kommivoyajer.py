@@ -1,9 +1,10 @@
 # matrixA = [
-#     [0, 8, 3, 0],
-#     [8, 0, 4, 0],
-#     [3, 4, 0, 1],
-#     [0, 0, 1, 0]
+#     [0, 8, 3, 0],   # 0
+#     [8, 0, 4, 0],   # 1
+#     [3, 4, 0, 1],   # 2
+#     [0, 0, 1, 0]    # 3
 # ]
+
 
 matrixA = [
     [0, 3, 8, 2, 0, 7],
@@ -134,6 +135,40 @@ def printishe(matrix):
             print(']')
 
 
+def contains_all(list, collection):
+    for element in list:
+        if element not in collection:
+            return False
+    return True
+
+
+def eilerov_cycle(matrix, current_node, pasted_nodes, edges_history, start_node):  # [[вес, откуда, куда],...]
+    if contains_all(get_list_nodes(matrix), pasted_nodes) and current_node == start_node:
+        print(pasted_nodes)
+    else:
+        is_there_path = False
+        for node in range(len(matrix)):
+            if matrix[current_node][node] <= 0:
+                continue
+            next_edge = [matrix[current_node][node], current_node, node]
+            if matrix[current_node][node] > 0 and next_edge not in edges_history:
+                is_there_path = True
+                edges_history.append(next_edge)
+                pasted_nodes.append(node)
+                eilerov_cycle(matrix, node, pasted_nodes, edges_history, start_node)
+        if not is_there_path and not contains_all(get_list_nodes(matrix), pasted_nodes):
+            rollback_eilerov_cycle(pasted_nodes, edges_history)
+
+
+def get_list_nodes(matrix):
+    return list(range(len(matrix)))
+
+
+def rollback_eilerov_cycle(pasted_nodes, edges_history):
+    pasted_nodes.pop()
+    edges_history.pop()
+
+
 # end of kar functions
 # ===========================
 #    main
@@ -143,3 +178,5 @@ karaksal(true_copy(matrixA))
 
 print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
 printishe(spanning_tree)
+
+eilerov_cycle(spanning_tree, 0, [], [], 0)
