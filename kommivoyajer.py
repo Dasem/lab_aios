@@ -1,5 +1,4 @@
 matrixA = [
-
     [0, 8, 3, 0],
     [8, 0, 4, 0],
     [3, 4, 0, 1],
@@ -69,6 +68,7 @@ def find_max(matrix):
     return max
 
 
+current_min_edge = [-1, -1]
 copy = true_copy(matrixA)
 ostovnoe_derevo = true_copy(matrixA)
 for i in range(len(ostovnoe_derevo)):
@@ -79,6 +79,7 @@ max_value = find_max(copy)
 
 
 def find_min(matrix):
+    global current_min_edge
     global ostovnoe_derevo
     min = max_value
     coord_i = -1
@@ -89,6 +90,7 @@ def find_min(matrix):
                 min = matrix[i][j]
                 coord_i = i
                 coord_j = j
+                current_min_edge = [coord_i, coord_j]
     if coord_i != -1:
         copy[coord_i][coord_j] = copy[coord_j][coord_i] = -1
         ostovnoe_derevo[coord_i][coord_j] = ostovnoe_derevo[coord_j][coord_i] = min
@@ -99,16 +101,20 @@ def find_min(matrix):
         return False
 
 
-def karaksal(matrix):
+def karaksal(matrix):  # Если получился цикл, то останавливаемся, отменяем последнее добавление
     while find_min(matrix):
         print('********')
         printishe(ostovnoe_derevo)
         print('********')
         if is_cycle(true_copy(ostovnoe_derevo)):
             print('\n\n\n\nKARAMBA!')
-
-            # ОТКАТ ПОСЛЕДНЕГО ДЕЙСТВИЯ
+            rollback()
             return 0
+
+
+def rollback():
+    ostovnoe_derevo[current_min_edge[0]][current_min_edge[1]] = 0
+    ostovnoe_derevo[current_min_edge[1]][current_min_edge[0]] = 0
 
 
 def printishe(matrix):
