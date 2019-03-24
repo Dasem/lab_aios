@@ -7,7 +7,6 @@
 
 
 matrixA = [
-
     [0, 5, 3, 8, 8, 8, 5, 6, 1, 4, 4, 8, 7],
     [5, 0, 4, 7, 7, 5, 7, 6, 4, 1, 7, 1, 6],
     [3, 4, 0, 2, 4, 4, 8, 7, 6, 5, 2, 2, 8],
@@ -21,8 +20,6 @@ matrixA = [
     [4, 7, 2, 5, 2, 1, 7, 4, 2, 3, 0, 6, 3],
     [8, 1, 2, 6, 4, 2, 4, 7, 6, 1, 6, 0, 7],
     [7, 6, 8, 3, 8, 3, 5, 8, 6, 6, 3, 7, 0]
-
-
 ]
 
 
@@ -193,11 +190,33 @@ def rollback_eilerov_cycle(pasted_nodes, edges_history):
 # ===========================
 #    main
 
+def find_kommivoyajer_path(cycle):
+    meeted_nodes = []
+    for node in cycle:
+        if node not in meeted_nodes:
+            meeted_nodes.append(node)
+    meeted_nodes.append(meeted_nodes[0])
+    return meeted_nodes
+
+
+def length_kommivoyajer_path(matrix, path):
+    len_path = len(path)
+    summ = 0
+    for i in range(len_path - 1):
+        summ += matrix[path[i]][path[i + 1]]
+    return summ
+
 
 karaksal(true_copy(matrixA))
-
 
 print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
 printishe(spanning_tree)
 
-print('Эйлеров цикл по остовному дереву, начиная с 0 вершины: ', eilerov_cycle_starter(spanning_tree))
+cycle = eilerov_cycle_starter(spanning_tree)
+
+print('Эйлеров цикл по остовному дереву, начиная с 0 вершины: ', cycle)
+
+kommivoyajer_path = find_kommivoyajer_path(cycle)
+print('Путь коммивояжжера: ', kommivoyajer_path)
+
+print('Длина пути: ', length_kommivoyajer_path(matrixA, kommivoyajer_path))
