@@ -62,10 +62,7 @@ def is_cycle(matrix):
 # kara...   functions
 
 def true_copy(a):
-    result = []
-    for row in a:
-        result.append(row.copy())
-    return result
+    return [row.copy() for row in a]
 
 
 def find_max(matrix):
