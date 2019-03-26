@@ -197,6 +197,7 @@ def rollback_eilerov_cycle(pasted_nodes, edges_history):
 # ===========================
 #    main
 
+# функция редуцирования эйлерова цикла
 def find_kommivoyajer_path(cycle):
     meeted_nodes = []
     for node in cycle:
@@ -213,6 +214,8 @@ def length_kommivoyajer_path(matrix, path):
         summ += matrix[path[i]][path[i + 1]]
     return summ
 
+
+# MAIN
 
 karaksal(true_copy(matrixA))
 if debug:

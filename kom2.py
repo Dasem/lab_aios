@@ -23,7 +23,7 @@ import random
 a = []
 row = []
 
-n = 11
+n = 12
 print(n)
 
 for i in range(n):
