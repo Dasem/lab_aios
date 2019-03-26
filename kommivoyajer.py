@@ -1,3 +1,5 @@
+import time
+
 # matrixA = [
 #     [0, 8, 3, 0],   # 0
 #     [8, 0, 4, 0],   # 1
@@ -7,20 +9,22 @@
 
 
 matrixA = [
-    [0, 5, 3, 8, 8, 8, 5, 6, 1, 4, 4, 8, 7],
-    [5, 0, 4, 7, 7, 5, 7, 6, 4, 1, 7, 1, 6],
-    [3, 4, 0, 2, 4, 4, 8, 7, 6, 5, 2, 2, 8],
-    [8, 7, 2, 0, 2, 1, 4, 6, 5, 2, 5, 6, 3],
-    [8, 7, 4, 2, 0, 5, 2, 4, 1, 7, 2, 4, 8],
-    [8, 5, 4, 1, 5, 0, 6, 2, 5, 7, 1, 2, 3],
-    [5, 7, 8, 4, 2, 6, 0, 3, 8, 4, 7, 4, 5],
-    [6, 6, 7, 6, 4, 2, 3, 0, 3, 1, 4, 7, 8],
-    [1, 4, 6, 5, 1, 5, 8, 3, 0, 6, 2, 6, 6],
-    [4, 1, 5, 2, 7, 7, 4, 1, 6, 0, 3, 1, 6],
-    [4, 7, 2, 5, 2, 1, 7, 4, 2, 3, 0, 6, 3],
-    [8, 1, 2, 6, 4, 2, 4, 7, 6, 1, 6, 0, 7],
-    [7, 6, 8, 3, 8, 3, 5, 8, 6, 6, 3, 7, 0]
+    [0, 5, 6, 5, 3, 8, 6, 2, 1, 6, 3],
+    [5, 0, 5, 6, 2, 3, 8, 8, 3, 7, 2],
+    [6, 5, 0, 6, 2, 3, 7, 2, 2, 2, 3],
+    [5, 6, 6, 0, 4, 1, 2, 5, 5, 8, 5],
+    [3, 2, 2, 4, 0, 4, 7, 8, 5, 1, 5],
+    [8, 3, 3, 1, 4, 0, 4, 5, 7, 7, 5],
+    [6, 8, 7, 2, 7, 4, 0, 2, 8, 2, 6],
+    [2, 8, 2, 5, 8, 5, 2, 0, 4, 4, 6],
+    [1, 3, 2, 5, 5, 7, 8, 4, 0, 6, 6],
+    [6, 7, 2, 8, 1, 7, 2, 4, 6, 0, 4],
+    [3, 2, 3, 5, 5, 5, 6, 6, 6, 4, 0]
 ]
+
+debug = False
+
+start_time = time.time()
 
 
 # =================================================
@@ -106,8 +110,9 @@ def find_min(matrix):
     if coord_i != -1:
         matrix[coord_i][coord_j] = matrix[coord_j][coord_i] = -1
         spanning_tree[coord_i][coord_j] = spanning_tree[coord_j][coord_i] = min
-        print('Изменение остовного дерева')
-        printishe(spanning_tree)
+        if debug:
+            print('Изменение остовного дерева')
+            printishe(spanning_tree)
         return True
     else:
         return False
@@ -117,9 +122,11 @@ def karaksal(matrix):  # Если получился цикл, отменяем 
     while find_min(matrix):
         if is_cycle(true_copy(spanning_tree)):
             rollback()
-            print("Алярм, цикл!!1! Откачено до этого состояния:")
-            printishe(spanning_tree)
-    print("Минимальные вершины закончились")
+            if debug:
+                print("Алярм, цикл!!1! Откачено до этого состояния:")
+                printishe(spanning_tree)
+    if debug:
+        print("Минимальные вершины закончились")
 
 
 def rollback():
@@ -153,6 +160,7 @@ def contains_all(list, collection):
     return True
 
 
+# Возвращает результат в список pasted_nodes
 def eilerov_cycle_starter(matrix):
     return eilerov_cycle(matrix, 0, [], 0)
 
@@ -207,19 +215,20 @@ def length_kommivoyajer_path(matrix, path):
 
 
 karaksal(true_copy(matrixA))
-
-
-
-print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
-printishe(spanning_tree)
+if debug:
+    print('\n\n\nNOT PRINT BUT PRINT\n\n\n')
+    printishe(spanning_tree)
 
 pasted_nodes = [0]
 eilerov_cycle_starter(spanning_tree)
 cycle = pasted_nodes
 
-print('Эйлеров цикл по остовному дереву, начиная с 0 вершины: ', cycle)
+if debug:
+    print('Эйлеров цикл по остовному дереву, начиная с 0 вершины: ', cycle)
 
 kommivoyajer_path = find_kommivoyajer_path(cycle)
 print('Путь коммивояжжера: ', kommivoyajer_path)
 
 print('Длина пути: ', length_kommivoyajer_path(matrixA, kommivoyajer_path))
+
+print('Время выполнения: ', time.time() - start_time)

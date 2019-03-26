@@ -22,7 +22,8 @@ import random
 
 a = []
 row = []
-n = random.randint(10, 15)
+
+n = 11
 print(n)
 
 for i in range(n):
