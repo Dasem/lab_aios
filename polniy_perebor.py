@@ -1,18 +1,21 @@
 import time
 
-matrix = [
-    [0, 80, 160, 172, 201, 144, 120, 60, 72, 100, 135],
-    [80, 0, 80, 100, 144, 120, 144, 100, 72, 60, 72],
-    [160, 80, 0, 60, 120, 144, 201, 172, 135, 100, 72],
-    [172, 100, 60, 0, 60, 100, 172, 160, 120, 80, 40],
-    [201, 144, 120, 60, 0, 80, 160, 172, 135, 100, 72],
-    [144, 120, 144, 100, 80, 0, 80, 100, 72, 60, 72],
-    [120, 144, 201, 172, 160, 80, 0, 60, 72, 100, 135],
-    [60, 100, 172, 160, 172, 100, 60, 0, 40, 80, 120],
-    [72, 72, 135, 120, 135, 72, 72, 40, 0, 40, 80],
-    [100, 60, 100, 80, 100, 60, 100, 80, 40, 0, 40],
-    [135, 72, 72, 40, 72, 72, 135, 120, 80, 40, 0]
-]
+
+def parse():
+    file = open('input.txt', 'r')
+    rows = file.readlines()
+    result_matrix = []
+    for row in rows:
+        new_row = row.split('\t')
+        new_row[-1] = new_row[-1].strip()
+        result_matrix.append(new_row)
+    for i in range(len(result_matrix)):
+        for j in range(len(result_matrix)):
+            result_matrix[j][i] = result_matrix[i][j] = int(result_matrix[j][i])
+    return result_matrix
+
+
+matrix = parse()
 
 result = -1
 path = []
