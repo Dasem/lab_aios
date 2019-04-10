@@ -13,14 +13,15 @@ def printishe(matrix):
             print(']')
 
 
-file = open('input.txt', 'r')
-rows = file.readlines()
-result_matrix = []
-for row in rows:
-    new_row = row.split('\t')
-    new_row[-1] = new_row[-1].strip()
-    result_matrix.append(new_row)
-for i in range(len(result_matrix)):
-    for j in range(len(result_matrix)):
-        result_matrix[j][i] = result_matrix[i][j]
-printishe(result_matrix)
+def parse():
+    file = open('input.txt', 'r')
+    rows = file.readlines()
+    result_matrix = []
+    for row in rows:
+        new_row = row.split('\t')
+        new_row[-1] = new_row[-1].strip()
+        result_matrix.append(new_row)
+    for i in range(len(result_matrix)):
+        for j in range(len(result_matrix)):
+            result_matrix[j][i] = result_matrix[i][j]
+    return result_matrix
